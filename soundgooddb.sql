@@ -29,7 +29,7 @@ CREATE TABLE public.person (
     street character varying(100),
     zip character varying(20),
     city character varying(100),
-    person_number character(11) NOT NULL,
+    person_number character(11) NOT NULL UNIQUE,
     first_name character varying(100) NOT NULL,
     last_name character varying(100) NOT NULL,
     phone_number character varying(100),
@@ -54,7 +54,7 @@ ALTER TABLE public.instructor OWNER TO postgres;
 
 CREATE TABLE public.genre (
     genre_id SERIAL NOT NULL,
-    genre character varying(100) NOT NULL,
+    genre character varying(100) NOT NULL UNIQUE,
 
     CONSTRAINT genre_id_pk PRIMARY KEY(genre_id)
 );
@@ -75,7 +75,7 @@ ALTER TABLE public.known_genres OWNER TO postgres;
 
 CREATE TABLE public.difficulty (
     difficulty_id SERIAL NOT NULL,
-    difficulty character varying(50) NOT NULL,
+    difficulty character varying(50) NOT NULL UNIQUE,
     difficulty_cost INT NOT NULL,
 
     CONSTRAINT difficulty_id_pk PRIMARY KEY (difficulty_id)
@@ -85,7 +85,7 @@ ALTER TABLE public.difficulty OWNER TO postgres;
 
 CREATE TABLE public.instrument_type(
     instrument_type_id SERIAL NOT NULL,
-    instrument_type character varying(50) NOT NULL,
+    instrument_type character varying(100) NOT NULL UNIQUE,
 
     CONSTRAINT instrument_type_id_pk PRIMARY KEY (instrument_type_id)
 );
@@ -180,7 +180,7 @@ ALTER TABLE public.location OWNER TO postgres;
 
 CREATE TABLE public.lesson_type(
     lesson_type_id SERIAL NOT NULL,
-    lesson_type character varying(50) NOT NULL,
+    lesson_type character varying(50) NOT NULL UNIQUE, 
     type_cost INT NOT NULL,
 
     CONSTRAINT lesson_type_id_pk PRIMARY KEY (lesson_type_id)
