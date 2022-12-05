@@ -11,16 +11,11 @@ ORDER BY DATE_TRUNC('month', lesson.start_time);
 
 SELECT siblings3.total_siblings, COUNT(*)
 FROM (
-    SELECT student_id, COUNT(siblings2.sibling_id) as total_siblings
-    FROM (
-        SELECT s1.student_id AS sibling_id, s1.student_sibling_id
-        FROM siblings s1
-        UNION
-        SELECT s2.student_sibling_id AS sibling_id, s2.student_id AS student_sibling_id
-        FROM siblings s2   
-    ) AS siblings2
-    RIGHT JOIN student ON student.student_id = siblings2.sibling_id
-    GROUP BY student_id
+    SELECT student.student_id, COUNT(CASE WHEN siblings.student_id IS NOT NULL then 1 ELSE NULL END) as total_siblings
+    FROM siblings
+    RIGHT JOIN student ON (student.student_id = siblings.student_id OR student.student_id = siblings.student_sibling_id)
+    GROUP BY student.student_id
+    ORDER BY student.student_id
 ) AS siblings3
 GROUP BY siblings3.total_siblings
 ORDER BY siblings3.total_siblings;
